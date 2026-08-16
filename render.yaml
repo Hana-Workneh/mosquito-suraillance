@@ -1,0 +1,19 @@
+services:
+  # 1. VectorGuard AI Backend Service (Docker container with FFmpeg & PyTorch CPU)
+  - type: web
+    name: vectorguard-backend
+    env: docker
+    dockerContext: WebApp/backend/backend
+    dockerfilePath: WebApp/backend/backend/Dockerfile
+    plan: free
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false  # You will enter your Groq API key in the Render dashboard
+
+  # 2. VectorGuard AI Frontend Service (Static Site)
+  - type: web
+    name: vectorguard-frontend
+    env: static
+    rootDir: WebApp/frontend
+    buildCommand: ""
+    staticPublishPath: .
